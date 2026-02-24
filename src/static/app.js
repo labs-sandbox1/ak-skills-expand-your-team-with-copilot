@@ -872,15 +872,18 @@ document.addEventListener("DOMContentLoaded", () => {
     if (isDarkMode) {
       document.body.classList.add('dark-mode');
       darkModeIcon.textContent = '☀️';
+      darkModeToggle.setAttribute('aria-label', 'Switch to light mode');
     } else {
       darkModeIcon.textContent = '🌙';
+      darkModeToggle.setAttribute('aria-label', 'Switch to dark mode');
     }
   }
 
   function toggleDarkMode() {
     const isDarkMode = document.body.classList.toggle('dark-mode');
-    // Update icon
+    // Update icon and aria-label
     darkModeIcon.textContent = isDarkMode ? '☀️' : '🌙';
+    darkModeToggle.setAttribute('aria-label', isDarkMode ? 'Switch to light mode' : 'Switch to dark mode');
     // Save preference
     localStorage.setItem('darkMode', isDarkMode);
   }
