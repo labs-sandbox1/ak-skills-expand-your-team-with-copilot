@@ -388,6 +388,7 @@ document.addEventListener("DOMContentLoaded", () => {
           shareText
         )}&url=${encodeURIComponent(activityUrl)}`;
         window.open(shareUrl, "_blank", "width=550,height=420");
+        showMessage(`Opening Twitter to share ${activityName}...`, "info");
         break;
 
       case "facebook":
@@ -395,6 +396,7 @@ document.addEventListener("DOMContentLoaded", () => {
           activityUrl
         )}`;
         window.open(shareUrl, "_blank", "width=550,height=420");
+        showMessage(`Opening Facebook to share ${activityName}...`, "info");
         break;
 
       case "linkedin":
@@ -402,6 +404,7 @@ document.addEventListener("DOMContentLoaded", () => {
           activityUrl
         )}`;
         window.open(shareUrl, "_blank", "width=550,height=420");
+        showMessage(`Opening LinkedIn to share ${activityName}...`, "info");
         break;
 
       case "email":
@@ -409,12 +412,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const body = encodeURIComponent(
           `${shareDescription}\n\nLearn more: ${activityUrl}`
         );
-        window.location.href = `mailto:?subject=${subject}&body=${body}`;
+        const mailtoLink = `mailto:?subject=${subject}&body=${body}`;
+        // Use a temporary anchor to avoid navigating away from the page
+        const mailtoAnchor = document.createElement("a");
+        mailtoAnchor.href = mailtoLink;
+        mailtoAnchor.click();
+        showMessage(`Opening email client to share ${activityName}...`, "info");
         break;
     }
-
-    // Show feedback message
-    showMessage(`Sharing ${activityName} on ${platform}!`, "info");
   }
 
   // Function to fetch activities from API with optional day and time filters
