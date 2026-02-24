@@ -374,7 +374,7 @@ document.addEventListener("DOMContentLoaded", () => {
       : "email";
 
     // Build share content
-    const pageUrl = window.location.href.split("?")[0]; // Get base URL without query params
+    const pageUrl = `${window.location.origin}${window.location.pathname}`;
     const activityUrl = `${pageUrl}?activity=${encodeURIComponent(activityName)}`;
     const formattedSchedule = formatSchedule(details);
     const shareText = `Check out this activity at Mergington High School: ${activityName}`;
@@ -413,10 +413,8 @@ document.addEventListener("DOMContentLoaded", () => {
           `${shareDescription}\n\nLearn more: ${activityUrl}`
         );
         const mailtoLink = `mailto:?subject=${subject}&body=${body}`;
-        // Use a temporary anchor to avoid navigating away from the page
-        const mailtoAnchor = document.createElement("a");
-        mailtoAnchor.href = mailtoLink;
-        mailtoAnchor.click();
+        // mailto links don't navigate away from the page, so we can use window.location.href safely
+        window.location.href = mailtoLink;
         showMessage(`Opening email client to share ${activityName}...`, "info");
         break;
     }
