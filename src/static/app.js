@@ -408,7 +408,7 @@ document.addEventListener("DOMContentLoaded", () => {
         break;
 
       case "email":
-        const subject = encodeURIComponent(`${shareText}`);
+        const subject = encodeURIComponent(shareText);
         const body = encodeURIComponent(
           `${shareDescription}\n\nLearn more: ${activityUrl}`
         );
