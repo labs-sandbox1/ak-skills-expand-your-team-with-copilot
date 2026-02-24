@@ -25,6 +25,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeLoginModal = document.querySelector(".close-login-modal");
   const loginMessage = document.getElementById("login-message");
 
+  // Dark mode elements
+  const darkModeToggle = document.getElementById("dark-mode-toggle");
+  const darkModeIcon = document.getElementById("dark-mode-icon");
+
   // Activity categories with corresponding colors
   const activityTypes = {
     sports: { label: "Sports", color: "#e8f5e9", textColor: "#2e7d32" },
@@ -861,7 +865,34 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeRangeFilter,
   };
 
+  // Dark mode functionality
+  function initializeDarkMode() {
+    // Check for saved dark mode preference, default to light mode
+    const isDarkMode = localStorage.getItem('darkMode') === 'true';
+    if (isDarkMode) {
+      document.body.classList.add('dark-mode');
+      darkModeIcon.textContent = '☀️';
+      darkModeToggle.setAttribute('aria-label', 'Switch to light mode');
+    } else {
+      darkModeIcon.textContent = '🌙';
+      darkModeToggle.setAttribute('aria-label', 'Switch to dark mode');
+    }
+  }
+
+  function toggleDarkMode() {
+    const isDarkMode = document.body.classList.toggle('dark-mode');
+    // Update icon and aria-label
+    darkModeIcon.textContent = isDarkMode ? '☀️' : '🌙';
+    darkModeToggle.setAttribute('aria-label', isDarkMode ? 'Switch to light mode' : 'Switch to dark mode');
+    // Save preference
+    localStorage.setItem('darkMode', isDarkMode);
+  }
+
+  // Dark mode toggle event listener
+  darkModeToggle.addEventListener('click', toggleDarkMode);
+
   // Initialize app
+  initializeDarkMode();
   checkAuthentication();
   initializeFilters();
   fetchActivities();
